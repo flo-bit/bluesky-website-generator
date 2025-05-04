@@ -13,7 +13,7 @@
 
 				// create and submit form with handle
 				const form = document.createElement('form');
-				form.action = '/?/login';
+				form.action = 'login';
 				form.method = 'POST';
 				form.innerHTML = `<input type="hidden" name="handle" value="${handle}">`;
 
