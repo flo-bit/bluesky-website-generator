@@ -9,11 +9,9 @@
 	{#if !data.user}
 		<BlueskyLogin
 			login={async (handle) => {
-				console.log(handle);
-
 				// create and submit form with handle
 				const form = document.createElement('form');
-				form.action = '/login';
+				form.action = '/?/login';
 				form.method = 'POST';
 				form.innerHTML = `<input type="hidden" name="handle" value="${handle}">`;
 
@@ -47,5 +45,9 @@
 				}
 			]}
 		/>
+
+		<form method="POST" action="/?/logout">
+			<Button type="submit">Logout</Button>
+		</form>
 	{/if}
 </div>
