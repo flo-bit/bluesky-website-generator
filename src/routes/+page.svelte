@@ -1,11 +1,11 @@
 <script>
-	import { Button } from '@fuxui/base';
-	import { BlueskyLogin } from '@fuxui/social';
+	import { Button, Tabs } from '@fuxui/base';
+	import { BlueskyLogin, UserProfile } from '@fuxui/social';
 
 	let { data } = $props();
 </script>
 
-<div class="flex h-screen flex-col items-center justify-center">
+<div class="mx-auto max-w-2xl">
 	{#if !data.user}
 		<BlueskyLogin
 			login={async (handle) => {
@@ -27,8 +27,25 @@
 			formMethod="POST"
 		/>
 	{:else}
-		<p class="text-base-900 dark:text-base-50 text-2xl font-bold">
-			Welcome {data.user.displayName}
-		</p>
+		<Button size="lg" class="absolute top-2 right-2">Publish</Button>
+		<UserProfile class="" profile={{ ...data.user, description: '' }} />
+
+		<Tabs
+			active="About"
+			items={[
+				{
+					name: 'About',
+					href: '/about'
+				},
+				{
+					name: 'Links',
+					href: '/links'
+				},
+				{
+					name: 'Feed',
+					href: '/feed'
+				}
+			]}
+		/>
 	{/if}
 </div>
