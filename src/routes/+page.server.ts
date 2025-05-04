@@ -8,7 +8,7 @@ export async function load() {
 }
 
 export const actions: Actions = {
-	default: async ({ request }) => {
+	login: async ({ request }) => {
 		const formData = await request.formData();
 		let handle = formData.get('handle') as string;
 
@@ -25,27 +25,9 @@ export const actions: Actions = {
 			error(500);
 		}
 		redirect(301, url.toString());
+	},
+	logout: async ({ cookies }) => {
+		cookies.delete('sid', { path: '/' });
+		redirect(301, '/');
 	}
-	// login: async ({ request }) => {
-	// 	const formData = await request.formData();
-	// 	let handle = formData.get('handle') as string;
-
-	// 	if (handle.startsWith('@')) {
-	// 		handle = handle.slice(1);
-	// 	}
-
-	// 	if (!isValidHandle(handle)) {
-	// 		error(400, { message: 'invalid handle' });
-	// 	}
-
-	// 	const url = await atclient.authorize(handle, { scope: 'atproto transition:generic' });
-	// 	if (!url) {
-	// 		error(500);
-	// 	}
-	// 	redirect(301, url.toString());
-	// },
-	// logout: async ({ cookies }) => {
-	// 	cookies.delete('sid', { path: '/' });
-	// 	redirect(301, '/');
-	// }
 };

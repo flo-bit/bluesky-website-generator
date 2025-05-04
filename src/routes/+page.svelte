@@ -30,7 +30,7 @@
 			}}
 		/>
 
-		<form method="POST" class="hidden" bind:this={form}>
+		<form method="POST" action="/?/login" class="hidden" bind:this={form}>
 			<input type="hidden" name="handle" value="handle">
 		</form>
 	{:else}
@@ -54,9 +54,9 @@
 				}
 			]}
 		/>
-<!-- 
-		<form method="POST" action="/?/logout">
+
+		<form method="POST" action="/?/logout" class="mt-4">
 			<Button type="submit">Logout</Button>
-		</form> -->
+		</form>
 	{/if}
 </div>
