@@ -1,47 +1,62 @@
 <script lang="ts">
-	import { Badge, Button, Heading, Input, Subheading, Tabs } from '@fuxui/base';
-	import { BlueskyLogin, UserProfile } from '@fuxui/social';
+	import { Badge, Button, Input, Subheading, Tabs, ThemeToggle, toast, Toaster } from '@fuxui/base';
+	import { BlueskyLogin, blueskyPostToPostData, UserProfile, type PostData } from '@fuxui/social';
 	import { editingState } from './state.svelte.js';
 	import Editor from '$lib/Editor.svelte';
 	import Posts from '$lib/Posts.svelte';
 	import Links from '$lib/Links.svelte';
+	import { onMount } from 'svelte';
+	import { AtpBaseClient } from '@atproto/api';
+	import type { FeedViewPost } from '@atproto/api/dist/client/types/app/bsky/feed/defs.js';
+	import Navbar from '$lib/Navbar.svelte';
 
 	let { data } = $props();
 
 	let form = $state<HTMLFormElement | null>(null);
 
-	let link = $state('');
+	onMount(async () => {
+		editingState.links = JSON.parse(localStorage.getItem('links') ?? '[]');
 
-	async function addLink(event: Event) {
-		event.preventDefault();
+		if (!data.user) return;
 
-		// check if link is already in the list
-		if (editingState.links.some((l) => l.url === link)) {
-			return;
-		}
+		const posts = await getPostsOfUser({ actor: data.user.did });
+		console.log(posts);
 
-		const response = await fetch(`/api/get-og?url=${link}`);
-		const og = await response.json();
-
-		if(!og.success) return;
-
-		editingState.links.push({
-			url: link,
-			title: og.ogTitle,
-			description: og.ogDescription,
-			image: og.ogImage?.[0]?.url
+		blueskyPosts = posts.feed.map((post) => {
+			console.log(post);
+			return blueskyPostToPostData(post.post);
 		});
+	});
 
-		// save links to local storage
-		localStorage.setItem('links', JSON.stringify(editingState.links));
-
-		link = '';
-
-		console.log(editingState.links);
+	export async function getPostsOfUser({
+		actor,
+		cursor,
+		limit = 20
+	}: {
+		actor: string;
+		cursor?: string;
+		limit?: number;
+	}) {
+		let agent = new AtpBaseClient({ service: 'https://api.bsky.app' });
+		const perLimit = limit > 100 ? 100 : limit;
+		const posts: FeedViewPost[] = [];
+		do {
+			const { data } = await agent.app.bsky.feed.getAuthorFeed({
+				actor,
+				cursor,
+				limit: perLimit,
+				filter: 'posts_no_replies'
+			});
+			posts.push(...data.feed);
+			cursor = data.cursor;
+		} while (cursor && posts.length < limit);
+		return { feed: posts, cursor };
 	}
+
+	let blueskyPosts: PostData[] = $state([]);
 </script>
 
-<div class="mx-auto max-w-2xl">
+<div class="mx-auto max-w-2xl py-16">
 	{#if !data.user}
 		<BlueskyLogin
 			login={async (handle) => {
@@ -68,9 +83,9 @@
 			<input type="hidden" name="handle" value="handle" />
 		</form>
 	{:else}
-		<Button size="lg" class="fixed top-2 right-2">Publish</Button>
-		<UserProfile class="" profile={{ ...data.user, description: '' }} />
+		<UserProfile class="" profile={{ ...data.user, description: undefined }} />
 
+		<div class="-mt-8">
 		<Tabs
 			active={editingState.active}
 			items={[
@@ -92,7 +107,7 @@
 		<div class="px-4">
 			{#if editingState.active === 'about'}
 				<div
-					class="focus-within:outline-accent-400 hover:bg-base-900/20 group focus-within:bg-accent-500/5 focus-within:hover:bg-accent-500/5 relative mt-4 rounded-2xl px-2 py-0.5 focus-within:outline"
+					class="focus-within:outline-accent-400 hover:not-focus-within:bg-base-200/40 dark:hover:not-focus-within:bg-base-900/20 group focus-within:bg-accent-500/5 relative mt-4 rounded-2xl px-2 py-0.5 focus-within:outline"
 				>
 					<Editor />
 					<Badge
@@ -104,22 +119,20 @@
 				</div>
 			{:else if editingState.active === 'links'}
 				<div>
-					<div class="px-2">
-						<Subheading class="mb-4 mt-4">Add a link:</Subheading>
-						<form onsubmit={addLink} class="flex gap-2">
-							<Input bind:value={link} name="link" class="grow" />
-							<Button type="submit">Add</Button>
-						</form>
-					</div>
 					<Links links={editingState.links} />
 				</div>
 			{:else if editingState.active === 'feed'}
-				<Posts did={data.user.did} />
+				<Posts posts={blueskyPosts} />
 			{/if}
 		</div>
 
 		<form method="POST" action="/?/logout" class="fixed right-2 bottom-2">
 			<Button type="submit">Logout</Button>
 		</form>
+	</div>
 	{/if}
 </div>
+
+<Toaster />
+
+<Navbar />

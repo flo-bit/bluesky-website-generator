@@ -20,6 +20,9 @@ importers:
       '@fuxui/base':
         specifier: ^0.0.7
         version: 0.0.7(svelte@5.28.2)(tailwindcss@4.1.5)
+      '@fuxui/colors':
+        specifier: ^0.1.7
+        version: 0.1.7(svelte@5.28.2)(tailwindcss@4.1.5)
       '@fuxui/social':
         specifier: ^0.0.9
         version: 0.0.9(svelte@5.28.2)(tailwindcss@4.1.5)
@@ -686,6 +689,12 @@ packages:
       svelte: '>=5'
       tailwindcss: '>=3'
 
+  '@fuxui/colors@0.1.7':
+    resolution: {integrity: sha512-nudN3g26OgPXxRJK20QQ9DzVls1uIHS06mPAv+1feBCwXN44E4q6UF0CjuKPV27pq3itxFPkgnX7r2PTidc5WQ==, tarball: https://registry.npmjs.org/@fuxui/colors/-/colors-0.1.7.tgz}
+    peerDependencies:
+      svelte: '>=5'
+      tailwindcss: '>=3'
+
   '@fuxui/social@0.0.9':
     resolution: {integrity: sha512-fWvXr0B+vUKX4sU+fymeLxpO2Z5/BR4ix+iCq/zdX3wpERJqr228+btU9SVnNllVjulspdnnrrrPJcIioNZBIw==, tarball: https://registry.npmjs.org/@fuxui/social/-/social-0.0.9.tgz}
     peerDependencies:
@@ -1056,6 +1065,9 @@ packages:
     resolution: {integrity: sha512-FE1stRoqdHSb7RxesMfCXE8icwI1W6zGE/512ae3ZDrpkQYTTYeSyUJPRCjZd8CwVAhpDUbi1YR8pcZioFJQ/w==, tarball: https://registry.npmjs.org/@tailwindcss/vite/-/vite-4.1.5.tgz}
     peerDependencies:
       vite: ^5.2.0 || ^6
+
+  '@texel/color@1.1.10':
+    resolution: {integrity: sha512-0du+jhP68nvdXGoS/dxAyqkmWWzsogtU3chygmNf/u4QtDIbG1e5OfcVIWfx29B5ANCLEDOPEQIvOhrvwhlORg==, tarball: https://registry.npmjs.org/@texel/color/-/color-1.1.10.tgz}
 
   '@tiptap/core@2.11.9':
     resolution: {integrity: sha512-UZSxQLLyJst47xep3jlyKM6y1ebZnmvbGsB7njBVjfxf5H+4yFpRJwwNqrBHM/vyU55LCtPChojqaYC1wXLf6g==, tarball: https://registry.npmjs.org/@tiptap/core/-/core-2.11.9.tgz}
@@ -3228,6 +3240,15 @@ snapshots:
       tailwind-variants: 1.0.0(tailwindcss@4.1.5)
       tailwindcss: 4.1.5
 
+  '@fuxui/colors@0.1.7(svelte@5.28.2)(tailwindcss@4.1.5)':
+    dependencies:
+      '@fuxui/base': 0.0.7(svelte@5.28.2)(tailwindcss@4.1.5)
+      '@texel/color': 1.1.10
+      '@use-gesture/vanilla': 10.3.1
+      bits-ui: 1.4.4(svelte@5.28.2)
+      svelte: 5.28.2
+      tailwindcss: 4.1.5
+
   '@fuxui/social@0.0.9(svelte@5.28.2)(tailwindcss@4.1.5)':
     dependencies:
       '@atproto/api': 0.15.5
@@ -3563,6 +3584,8 @@ snapshots:
       '@tailwindcss/oxide': 4.1.5
       tailwindcss: 4.1.5
       vite: 6.3.4(@types/node@22.15.3)(jiti@2.4.2)(lightningcss@1.29.2)
+
+  '@texel/color@1.1.10': {}
 
   '@tiptap/core@2.11.9(@tiptap/pm@2.11.9)':
     dependencies:
