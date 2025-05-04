@@ -32,7 +32,7 @@
 			formMethod="POST"
 		/>
 
-		<form method="POST" action="?/login" class="hidden" bind:this={form}>
+		<form method="POST" action="/?/login" class="hidden" bind:this={form}>
 			<input type="hidden" name="handle" value="handle">
 		</form>
 	{:else}

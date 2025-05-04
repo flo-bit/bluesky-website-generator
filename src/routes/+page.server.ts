@@ -2,6 +2,11 @@ import { atclient } from '$lib/server/client';
 import { isValidHandle } from '@atproto/syntax';
 import { error, redirect, type Actions } from '@sveltejs/kit';
 
+/** @type {import('./$types').PageServerLoad} */
+export async function load() {
+	return {};
+}
+
 export const actions: Actions = {
 	login: async ({ request }) => {
 		const formData = await request.formData();
