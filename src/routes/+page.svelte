@@ -1,5 +1,15 @@
 <script lang="ts">
-	import { Badge, Button, Input, Subheading, Tabs, ThemeToggle, toast, Toaster } from '@fuxui/base';
+	import {
+		Badge,
+		Button,
+		Heading,
+		Input,
+		Subheading,
+		Tabs,
+		ThemeToggle,
+		toast,
+		Toaster
+	} from '@fuxui/base';
 	import { BlueskyLogin, blueskyPostToPostData, UserProfile, type PostData } from '@fuxui/social';
 	import { editingState } from './state.svelte.js';
 	import Editor from '$lib/Editor.svelte';
@@ -58,6 +68,7 @@
 
 <div class="mx-auto max-w-2xl py-16">
 	{#if !data.user}
+		<Heading class="mt-16 mb-8">Login with Bluesky to create your website</Heading>
 		<BlueskyLogin
 			login={async (handle) => {
 				// create and submit form with handle
@@ -86,53 +97,55 @@
 		<UserProfile class="" profile={{ ...data.user, description: undefined }} />
 
 		<div class="-mt-8">
-		<Tabs
-			active={editingState.active}
-			items={[
-				{
-					name: 'about',
-					onclick: () => (editingState.active = 'about')
-				},
-				{
-					name: 'links',
-					onclick: () => (editingState.active = 'links')
-				},
-				{
-					name: 'feed',
-					onclick: () => (editingState.active = 'feed')
-				}
-			]}
-		/>
+			<Tabs
+				active={editingState.active}
+				items={[
+					{
+						name: 'about',
+						onclick: () => (editingState.active = 'about')
+					},
+					{
+						name: 'links',
+						onclick: () => (editingState.active = 'links')
+					},
+					{
+						name: 'feed',
+						onclick: () => (editingState.active = 'feed')
+					}
+				]}
+			/>
 
-		<div class="px-4">
-			{#if editingState.active === 'about'}
-				<div
-					class="focus-within:outline-accent-400 hover:not-focus-within:bg-base-200/40 dark:hover:not-focus-within:bg-base-900/20 group focus-within:bg-accent-500/5 relative mt-4 rounded-2xl px-2 py-0.5 focus-within:outline"
-				>
-					<Editor />
-					<Badge
-						variant="secondary"
-						class="absolute top-2 right-2 opacity-60 group-focus-within:hidden"
+			<div class="px-4">
+				{#if editingState.active === 'about'}
+					<div
+						class="focus-within:outline-accent-400 hover:not-focus-within:bg-base-200/40 dark:hover:not-focus-within:bg-base-900/20 group focus-within:bg-accent-500/5 relative mt-4 rounded-2xl px-2 py-0.5 focus-within:outline"
 					>
-						Select to edit
-					</Badge>
-				</div>
-			{:else if editingState.active === 'links'}
-				<div>
-					<Links links={editingState.links} />
-				</div>
-			{:else if editingState.active === 'feed'}
-				<Posts posts={blueskyPosts} />
-			{/if}
-		</div>
+						<Editor />
+						<Badge
+							variant="secondary"
+							class="absolute top-2 right-2 opacity-60 group-focus-within:hidden"
+						>
+							Select to edit
+						</Badge>
+					</div>
+				{:else if editingState.active === 'links'}
+					<div>
+						<Links links={editingState.links} />
+					</div>
+				{:else if editingState.active === 'feed'}
+					<Posts posts={blueskyPosts} />
+				{/if}
+			</div>
 
-		<form method="POST" action="/?/logout" class="fixed right-2 bottom-2">
-			<Button type="submit">Logout</Button>
-		</form>
-	</div>
+			<form method="POST" action="/?/logout" class="fixed right-2 bottom-2">
+				<Button variant="secondary" type="submit">Logout</Button>
+			</form>
+		</div>
 	{/if}
 </div>
 
 <Toaster />
 
-<Navbar />
+{#if data.user}
+	<Navbar />
+{/if}
