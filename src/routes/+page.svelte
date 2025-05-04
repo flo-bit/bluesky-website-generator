@@ -28,8 +28,6 @@
 
 				return true;
 			}}
-			formAction="/login"
-			formMethod="POST"
 		/>
 
 		<form method="POST" class="hidden" bind:this={form}>
