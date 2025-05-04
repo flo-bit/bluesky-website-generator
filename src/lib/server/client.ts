@@ -4,7 +4,7 @@ import { SessionStore, StateStore } from './storage';
 import { dev } from '$app/environment';
 
 const publicUrl = 'https://bluesky-website-generator.vercel.app';
-const port = 5173;
+const port = 5420;
 const url = dev ? `http://[::1]:${port}` : publicUrl;
 
 const encodeCallbackUrl = encodeURIComponent(`${url}/oauth/callback`);
