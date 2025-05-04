@@ -1,8 +1,10 @@
-<script>
+<script lang="ts">
 	import { Button, Tabs } from '@fuxui/base';
 	import { BlueskyLogin, UserProfile } from '@fuxui/social';
 
 	let { data } = $props();
+
+	let form = $state<HTMLFormElement | null>(null);
 </script>
 
 <div class="mx-auto max-w-2xl">
@@ -10,13 +12,18 @@
 		<BlueskyLogin
 			login={async (handle) => {
 				// create and submit form with handle
-				const form = document.createElement('form');
-				form.action = '/?/login';
-				form.method = 'POST';
-				form.innerHTML = `<input type="hidden" name="handle" value="${handle}">`;
+				
+				if (!form) {
+					console.error('Form not found');
+					return false;
+				}
 
-				// submit form
-				document.body.appendChild(form);
+				// set handle
+				const input = form.querySelector('input[name="handle"]') as HTMLInputElement;
+				if (!input) {
+					return false;
+				}
+				input.value = handle;
 				form.submit();
 
 				return true;
@@ -24,6 +31,10 @@
 			formAction="/login"
 			formMethod="POST"
 		/>
+
+		<form method="POST" action="?/login" class="hidden" bind:this={form}>
+			<input type="hidden" name="handle" value="handle">
+		</form>
 	{:else}
 		<Button size="lg" class="absolute top-2 right-2">Publish</Button>
 		<UserProfile class="" profile={{ ...data.user, description: '' }} />
