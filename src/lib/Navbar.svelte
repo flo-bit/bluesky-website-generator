@@ -1,0 +1,33 @@
+<script lang="ts">
+	import { ThemeToggle, Navbar, Button } from '@fuxui/base';
+
+	import ThemeSelectDropdown from './ThemeSelectDropdown.svelte';
+</script>
+
+<Navbar>
+	<div class="flex items-center gap-2">
+		<!-- <Button variant="link" class="block font-normal lg:hidden backdrop-blur-none" popovertarget="mobile-menu">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 24 24"
+				fill="currentColor"
+				class="size-6!"
+			>
+				<path
+					fill-rule="evenodd"
+					d="M3 9a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 9Zm0 6.75a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z"
+					clip-rule="evenodd"
+				></path>
+			</svg>
+		</Button>
+
+		<Logo class={showLogo ? 'lg:ml-5' : 'lg:hidden'} /> -->
+	</div>
+	<div class="flex items-center gap-3">
+		<ThemeSelectDropdown />
+		<ThemeToggle class="backdrop-blur-none" />
+		<Button size="lg">Publish</Button>
+
+		<!-- <Github href="https://github.com/flo-bit/ui-kit" class="mr-2 p-2" /> -->
+	</div>
+</Navbar>
