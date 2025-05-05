@@ -4,6 +4,7 @@
 		Button,
 		Heading,
 		Input,
+		Modal,
 		Subheading,
 		Tabs,
 		ThemeToggle,
@@ -20,39 +21,16 @@
 	import type { FeedViewPost } from '@atproto/api/dist/client/types/app/bsky/feed/defs.js';
 	import Navbar from '$lib/Navbar.svelte';
 
-	let value = $state('');
-
 	let { data } = $props();
 	let form = $state<HTMLFormElement | null>(null);
 
-	async function deploy() {
-		const res = await fetch('/api/cloudflare', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-				projectName: data.user.handle.replace(/\./g, '-'),
-				domain: value + '.polijn.com',
-				profileHandle: data.user.handle
-			})
-		});
-
-		// const data = await res.json();
-		// if (!res.ok) {
-		// 	alert('Error: ' + data.error);
-		// } else {
-		// 	alert('Success!);
-		// }
-	}
 	onMount(async () => {
 		editingState.links = JSON.parse(localStorage.getItem('links') ?? '[]');
 
 		if (!data.user) return;
 
 		const posts = await getPostsOfUser({ actor: data.user.did });
-		console.log(posts);
-
 		blueskyPosts = posts.feed.map((post) => {
-			console.log(post);
 			return blueskyPostToPostData(post.post);
 		});
 	});
@@ -166,5 +144,5 @@
 <Toaster />
 
 {#if data.user}
-	<Navbar />
+	<Navbar handle={data.user.handle} domain={data.project} />
 {/if}

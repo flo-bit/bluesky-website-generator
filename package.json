@@ -26,6 +26,7 @@
 		"@tailwindcss/typography": "^0.5.15",
 		"@tailwindcss/vite": "^4.0.0",
 		"@types/node": "^22",
+		"@types/turndown": "^5.0.5",
 		"drizzle-kit": "^0.30.2",
 		"eslint": "^9.18.0",
 		"eslint-config-prettier": "^10.0.1",
@@ -48,19 +49,24 @@
 	},
 	"dependencies": {
 		"@atproto/api": "^0.15.5",
+		"@atproto/common": "^0.4.10",
 		"@atproto/oauth-client-node": "^0.2.16",
 		"@atproto/syntax": "^0.4.0",
 		"@fuxui/base": "^0.0.7",
 		"@fuxui/colors": "^0.1.7",
 		"@fuxui/social": "^0.0.9",
+		"@fuxui/time": "^0.0.7",
+		"@fuxui/visual": "^0.0.9",
 		"@libsql/client": "^0.14.0",
 		"@oslojs/encoding": "^1.1.0",
+		"@sveltejs/adapter-vercel": "^5.7.1",
 		"@tiptap/core": "^2.11.9",
 		"@tiptap/extension-image": "^2.11.9",
 		"@tiptap/extension-link": "^2.11.9",
 		"@tiptap/extension-placeholder": "^2.11.9",
 		"@tiptap/starter-kit": "^2.11.9",
 		"drizzle-orm": "^0.40.0",
-		"open-graph-scraper": "^6.10.0"
+		"open-graph-scraper": "^6.10.0",
+		"turndown": "^7.2.0"
 	}
 }

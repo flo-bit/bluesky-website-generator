@@ -35,7 +35,8 @@
 			onTransaction: () => {
 				editor = editor;
 				editingState.aboutContent = editor?.getJSON() ?? { type: "doc", content: [] };
-
+				editingState.aboutHTML = editor?.getHTML() ?? '';
+				
 				// save to local storage
 				localStorage.setItem('aboutContent', JSON.stringify(editingState.aboutContent));
 			},
@@ -44,7 +45,7 @@
 
 			editorProps: {
 				attributes: {
-					class: 'outline-none'
+					class: 'outline-none prose-headings:mt-2'
 				}
 			}
 		});
