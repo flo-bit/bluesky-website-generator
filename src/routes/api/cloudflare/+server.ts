@@ -32,7 +32,8 @@ async function createPagesProject(projectName: string, profileHandle: string) {
 			}
 		}
 	};
-
+	console.log('payload:');
+	console.log(payload.deployment_configs);
 	const res = await fetch(url, {
 		method: 'POST',
 		headers: {
